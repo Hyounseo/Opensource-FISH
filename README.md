@@ -71,12 +71,13 @@ skt/kobert-base-v1 파인튜닝
 ### ① MLP 모델 학습 곡선 (Accuracy / Loss)
 120 에포크 학습 진행 결과, Train 및 Validation 세트 모두에서 Loss가 안정적으로 하향 곡선을 그리며 Target 정확도에 도달했습니다.
 
-<img width="1599" height="1211" alt="Image" src="https://github.com/user-attachments/assets/c59e978b-cfae-43b3-92b7-b9a71d4f098d" />
+
+<img width="3420" height="1099" alt="Image" src="https://github.com/user-attachments/assets/51b9589b-4755-42fc-9b24-68fbd1c22596" />
 
 ### ② MLP 피싱 탐지 혼동 행렬 (Confusion Matrix)
 테스트 데이터셋 검증 결과, 피싱 위험(1) 클래스에 대해 26건을 정확히 찾아내고 단 1건의 오차만을 허용하며 높은 탐지 정밀도를 기록했습니다.
 
-<img width="3420" height="1099" alt="Image" src="https://github.com/user-attachments/assets/51b9589b-4755-42fc-9b24-68fbd1c22596" />
+<img width="1599" height="1211" alt="Image" src="https://github.com/user-attachments/assets/c59e978b-cfae-43b3-92b7-b9a71d4f098d" />
 
 ---
 
