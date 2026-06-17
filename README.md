@@ -79,6 +79,10 @@ skt/kobert-base-v1 파인튜닝
 
 <img width="1599" height="1211" alt="Image" src="https://github.com/user-attachments/assets/c59e978b-cfae-43b3-92b7-b9a71d4f098d" />
 
+### ③ KoBERT 피싱 탐지 상세 평가 결과 및 혼동 행렬 (Confusion Matrix)
+텍스트 문맥 분석을 위한 KoBERT 모델 검증 결과, 전체 87.0%의 높은 분류 정확도를 기록하며 이미지 내 언어적 피싱 징후를 정밀하게 포착했습니다.
+<img width="1599" height="1211" alt="Image" src="" />
+
 ---
 
 ## 5. 시작하기 (Getting Started)
