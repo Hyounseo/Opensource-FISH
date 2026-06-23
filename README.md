@@ -20,27 +20,26 @@
 
 시스템은 외부 AI API나 무거운 서버 인프라에 의존하지 않고, 오직 로컬 자원과 수학적 알고리즘을 기반으로 유기적인 파이프라인을 구축하여 동작합니다.
 
-[캡처 이미지 업로드] ──► [EasyOCR 엔진] ──► [텍스트 영역 파싱] ──► [본문 & URL 분리]
-│
-┌───────────────────────────────────────────────────────────────────┘
-▼                                       ▼
-[Dual AI Engine Stage]                 [Deterministic Rule Stage]
-① TF-IDF + Sequential MLP 신경망       ③ 화이트리스트 직접 매칭 (539개 도메인)
+[캡처 이미지 업로드] 
+        │
+        ▼
+[EasyOCR 엔진] ──► [텍스트 영역 파싱] ──► [본문 & URL 분리]
+                               │
+┌───────────────────────────────────────────────────────────────┐
+▼                                                               ▼
+[Dual AI Engine Stage]                 [VD-Verifier Stage]
+① TF-IDF + Sequential MLP 신경망       ① 화이트리스트 직접 매칭 (539개 도메인)
 
-Char N-gram(2,4) 벡터화 연산         ④ Levenshtein Distance (편집 거리)
-
-3-Layer Dense 신경망 가중치 추론     - 공식 도메인과의 수학적 철자 차이 계산
+-Char N-gram(2,4) 벡터화 연산          ② Levenshtein Distance (편집 거리)
+-3-Layer Dense 신경망 가중치 추론       - 공식 도메인과의 수학적 철자 차이 계산
 ② KoBERT Sequence Classifier           - 교묘한 철자 변조 사칭 URL 차단
 
-skt/kobert-base-v1 파인튜닝
-
-한국어 특화 피싱 문맥 탐지 보완
+-skt/kobert-base-v1 파인튜닝            ③로지스틱 회귀 모델
+-한국어 특화 피싱 문맥 탐지 보완          -미등록 도메인 기반 위험도 확률 예측
 │                                       │
 └─────────────────┬─────────────────────┘
-▼
-[가중치 산정 알고리즘]
-▼
-[Gradio UI 최종 대시보드 출력]
+                  ▼
+    [Gradio UI 최종 대시보드 출력]
 
 ---
 
@@ -52,7 +51,7 @@ skt/kobert-base-v1 파인튜닝
 
 ### ② Levenshtein Distance (편집 거리 알고리즘)
 * 공식 도메인과 피싱 도메인의 철자 차이를 수학적으로 계산하는 문자열 매칭 알고리즘을 직접 구현했습니다.
-* **539개의 정상 도메인 화이트리스트 DB**와 비교 연산하여, 미세하게 주소를 변조한 typo-squatting 사칭 행위를 완벽하게 잡아냅니다.
+* **539개의 정상 도메인 화이트리스트 DB**와 비교 연산하여, 미세하게 주소를 변조한 typo-squatting 사칭 행위를 잡아냅니다.
 
 ### ③ TF-IDF + Sequential MLP 신경망 모델
 * 글자 단위의 조합 특성을 반영하기 위해 **Character N-gram(ngram_range=(2,4), max_features=500)** 방식을 적용하여 텍스트 데이터를 벡터로 바꿉니다.
